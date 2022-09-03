@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>React Riina</title>
+        <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+        <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+        <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    </head>
+    <body>
+        <div id="kiht1"></div>
+    </body>
+    <script type="text/babel">
+        const initialList = [
+            {name: "Juku", height: "1.7", weight: "60"},
+            {name: "Kati", height: "1.8", weight: "56"}
+        ];
+
+        
+
+        function Tervita() {
+            const [mylist, setList] = React.useState(initialList);
+            const [name, setName] = React.useState("nimetu");
+            const [height, setHeight] = React.useState("pikkus puudub");
+            const [weight, setWeight] = React.useState("kaaluta");
+            const [background, setBackground] = React.useState("white");
+
+            React.useEffect(() => {
+                setBackground(userNameAvailable() ? "white" : "red")
+            }, [name])
+
+            function userNameAvailable() {
+                let vaba = true;
+                    for(let i=0; i < mylist.length; i++){
+                        if(mylist[i].name == name){
+                            vaba = false;
+                            alert("See nimi on juba olemas!")
+                        }
+                    }
+                return vaba
+        }
+
+            function addPerson(){
+                !!userNameAvailable() && setList(mylist.concat({name:name, height:height, weight:weight}))
+            }
+
+            function removePerson(name) {
+                //küsin üle kas tahab kustutada
+                if(confirm(`Kas soovid kustutada kasutaja ${name}?`)){
+                    const newList = mylist.filter((item) => item.name !== name)
+                    setList(newList);
+                }                
+            }
+
+          return <div>
+            <ul>
+                {mylist.map((item) => <li key={item.name}>{item.name} {item.height}
+                    <button onClick={() => removePerson(item.name)}>Kustuta</button>
+                    </li>)}
+            </ul>
+            <input type="text" value={name} onChange={(e) => setName(e.target.value)} style={{"backgroundColor": background}}/>
+            <input type="text" value={height} onChange={(e) => setHeight(e.target.value)}/>
+            <input type="text" value={weight} onChange={(e) => setWeight(e.target.value)}/>
+            <input type="button" value="Lisa" onClick={() => addPerson()}/>
+            </div>
+          
+        }
+  
+        const root = ReactDOM.createRoot(document.getElementById('kiht1'))
+        root.render(<Tervita />)
+       
+      </script>
+</html>
