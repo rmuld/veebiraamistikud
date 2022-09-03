@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>React Riina</title>
+        <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+        <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+        <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    </head>
+    <body>
+        <div id="kiht1"></div>
+    </body>
+    <script type="text/babel">
+        function Tered(props) {
+            let array = [];
+            if(props.count) {
+                for(let i=0; i < props.count; i++){
+                    array.push(<li>tere</li>);
+                }
+            }
+            return <ul>{array}</ul>
+        }
+
+       
+
+        function KMI(props) {
+            return <span>Kehamassiindeks on {((props.weight)/Math.pow(props.height, 2)).toFixed(2)} </span>;
+        }
+
+        function Tervita(props) {
+            const [count, setCount] = React.useState(0);
+            const [height, setHeight] = React.useState(1.6);
+            const [weight, setWeight] = React.useState(50);
+            const reset = () => { setCount(0)}
+
+            return (
+                <div>
+                    <p>You cliked {count} times </p>
+                    <button onClick={() => setCount(count +1)}>Increase +1</button>
+                    <button onClick={() => setCount(count -1)}>Decrease -1</button>
+                    <button onClick={reset}>Reset</button>
+                    <Tered count={count}/>
+                    <span>********************************</span>
+                    <p>Kaal: {weight}</p>
+                    <input type="number" value={weight} onChange={e => setWeight(e.target.value)} />
+                    <button onClick={() => setWeight(weight +1)}>Increase +1</button>
+                    <button onClick={() => setWeight(weight -1)}>Decrease -1</button>
+                    <p>Pikkus: {height.toFixed(1)} meetrit</p>
+                    <input type="number" value={height.toFixed(1)} step="0.1" onChange={e => setHeight(e.target.value)} />
+                    <button onClick={() => setHeight(height +0.1)}>Increase +0.1</button>
+                    <button onClick={() => setHeight(height -0.1)}>Decrease -0.1</button>
+                    <br/>
+                    <KMI height={height} weight={weight}/>
+                    <p>Kast</p>
+                    <div 
+                        style={{"backgroundColor": "black",
+                                "height": height*100+"px",
+                                "width": weight+"px"}}>x</div>
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('kiht1'))
+        root.render(<Tervita kaal="66" pikkus="1.7"/>);
+      </script>
+</html>
