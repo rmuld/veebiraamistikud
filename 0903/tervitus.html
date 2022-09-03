@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>React Riina</title>
+        <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+        <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+        <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    </head>
+    <body>
+        <div id="kiht1"></div>
+    </body>
+    <script type="text/babel">
+        function Aasta() {
+            return new Date().getFullYear();
+        }
+
+        function Vanus (props) {
+            return (props.synniaasta)?Aasta()-props.synniaasta : 'vanus teadmata'
+        }
+
+        function Kehamassiindeks(props) {
+            return <span>Kehamassiindeks on {((props.kaal)/Math.pow(props.pikkus, 2)).toFixed(2)} </span>;
+        }
+
+        function Tervita(props) {
+          return 
+            <span>Tere
+                {(props.eesnimi) ? 
+                    <span>, {props.eesnimi}<span> </span>
+                        {(props.perenimi)?props.perenimi:'perekonnanimetu'}    
+                    </span>                    
+                    :'xxx'
+                }
+            </span>;
+          
+        }
+  
+        const root = ReactDOM.createRoot(document.getElementById('kiht1'))
+        //root.render(<Tervita eesnimi="Riina" perenimi="Muld"/>)
+        //root.render(<Aasta/>);
+        //root.render(<Vanus synniaasta="1922"/>);
+        root.render(<Kehamassiindeks kaal="66" pikkus="1.7"/>);
+      </script>
+</html>
